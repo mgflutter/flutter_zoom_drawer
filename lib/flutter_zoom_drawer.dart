@@ -79,10 +79,6 @@ class ZoomDrawer extends StatefulWidget {
     return context.findAncestorStateOfType<State<ZoomDrawer>>();
   }
 
-  /// Static function to determine the device text direction RTL/LTR
-  static bool isRTL() {
-    return widget.rtl;
-  }
 }
 
 class _ZoomDrawerState extends State<ZoomDrawer>
@@ -94,9 +90,9 @@ class _ZoomDrawerState extends State<ZoomDrawer>
   Interval(0.0, 1.0, curve: Curves.easeOut); // Curves.bounceOut
 
   /// check the slide direction
-  final int _rtlSlide = ZoomDrawer.isRTL() ? -1 : 1;
+   int _rtlSlide = 1;
 
-  final bool _rtl = ZoomDrawer.isRTL();
+   bool _rtl = false;
 
   AnimationController _animationController;
   DrawerState _state = DrawerState.closed;
@@ -132,6 +128,10 @@ class _ZoomDrawerState extends State<ZoomDrawer>
   @override
   void initState() {
     super.initState();
+
+     _rtlSlide = widget.rtl ? -1 : 1;
+
+    _rtl = widget.rtl;
 
     stateNotifier = ValueNotifier(_state);
 
@@ -267,7 +267,7 @@ class _ZoomDrawerState extends State<ZoomDrawer>
   @override
   Widget build(BuildContext context) {
     final slidePercent =
-    ZoomDrawer.isRTL() ? MediaQuery
+    widget.rtl ? MediaQuery
         .of(context)
         .size
         .width * .1 : 15.0;
