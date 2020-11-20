@@ -35,6 +35,7 @@ class ZoomDrawer extends StatefulWidget {
     this.showShadow = false,
     this.openCurve,
     this.closeCurve,
+    this.rtl,
   }) : assert(angle <= 0.0 && angle >= -30.0);
 
   /// controller to have access to the open/close/toggle function of the drawer
@@ -66,6 +67,9 @@ class ZoomDrawer extends StatefulWidget {
 
   /// Drawer slide in curve
   final Curve closeCurve;
+  
+  /// Boolean, whether to make it rtl - defaults to false
+  final bool rtl;
 
   @override
   _ZoomDrawerState createState() => new _ZoomDrawerState();
@@ -77,7 +81,7 @@ class ZoomDrawer extends StatefulWidget {
 
   /// Static function to determine the device text direction RTL/LTR
   static bool isRTL() {
-    return ui.window.locale.languageCode.toLowerCase() == "ar";
+    return rtl == null ? false : rtl;
   }
 }
 
